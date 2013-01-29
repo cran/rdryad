@@ -28,7 +28,7 @@
 \examples{
 \dontrun{
 mymetdata <- getalldryad_metadata(T, progress = "text", T,
-   "/Mac/R_stuff/Blog_etc/Dryad/")
+   "/path/to/dir/")
 }
 }
 

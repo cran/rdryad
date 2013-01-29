@@ -1,8 +1,8 @@
-\name{listmetadataformats}
-\alias{listmetadataformats}
+\name{dr_listmetadataformats}
+\alias{dr_listmetadataformats}
 \title{Learn about the Dryad metadata formats available.}
 \usage{
-  listmetadataformats()
+  dr_listmetadataformats()
 }
 \value{
   List of information on metadata formats.
@@ -12,7 +12,7 @@
 }
 \examples{
 \dontrun{
-listmetadataformats()
+dr_listmetadataformats()
 }
 }
 

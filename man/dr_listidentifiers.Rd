@@ -1,14 +1,14 @@
-\name{listidentifiers}
-\alias{listidentifiers}
+\name{dr_listidentifiers}
+\alias{dr_listidentifiers}
 \title{Gets all OAI Dryad identifiers.}
 \usage{
-  listidentifiers(tor,
+  dr_listidentifiers(tor,
     url = "http://www.datadryad.org/oai/request", ...,
     curl = getCurlHandle())
 }
 \arguments{
-  \item{tor}{Return list of identifiers to R ("r"), or to
-  your directory at "~/." ("dir") (character).}
+  \item{tor}{Return list of identifiers to R ('r'), or to
+  your directory at '~/.' ('dir') (character).}
 
   \item{url}{the base url for the function (should be left
   to default).}
@@ -28,7 +28,7 @@
 }
 \examples{
 \dontrun{
-identifiers <- listidentifiers('r')
+identifiers <- dr_listidentifiers('r')
 
 # Data packages
 identifiers[[1]]

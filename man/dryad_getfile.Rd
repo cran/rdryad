@@ -16,7 +16,8 @@
 }
 \examples{
 \dontrun{
-dryaddat <- download_url("10255/dryad.1759")
+# csv file
+dryaddat <- download_url('10255/dryad.1759')
 dryad_getfile(dryaddat)
 }
 }
