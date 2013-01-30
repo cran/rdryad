@@ -1,8 +1,8 @@
-\name{identify}
-\alias{identify}
+\name{dr_identify}
+\alias{dr_identify}
 \title{Learn about the Dryad OAI-PMH service.}
 \usage{
-  identify(formatted = FALSE)
+  dr_identify(formatted = FALSE)
 }
 \arguments{
   \item{formatted}{Defaults to printing results - set to
@@ -16,7 +16,7 @@
 }
 \examples{
 \dontrun{
-identify()
+dr_identify()
 }
 }
 
