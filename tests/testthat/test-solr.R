@@ -43,7 +43,7 @@ test_that("d_solr_search works", {
   expect_is(gg, "data.frame")
 
   expect_true(any(grepl("Galliard", aa$dc.contributor.author, ignore.case = TRUE)))
-  expect_more_than(NROW(aa), 0)
+  expect_gt(NROW(aa), 0)
 
   expect_named(bb, c('handle', 'dc.title_sort'))
 
@@ -52,11 +52,11 @@ test_that("d_solr_search works", {
 
   expect_named(dd, c('dc.identifier', 'dc.title_ac'))
 
-  expect_named(ee, c('facet_queries','facet_fields','facet_dates','facet_ranges'))
+  expect_named(ee, c('facet_queries','facet_fields','facet_pivot','facet_dates','facet_ranges'))
   expect_is(ee$facet_fields$dc.subject_filter, 'data.frame')
 
   expect_named(ff, 'dc.relation.isreferencedby')
-  expect_true(all(grepl("doi", ff$dc.relation.isreferencedby)))
+  expect_true(all(grepl("doi", Filter(function(z) nchar(z) > 0, ff$dc.relation.isreferencedby))))
 
   expect_named(gg, 'dc.identifier')
   expect_true(all(grepl("doi", gg$dc.identifier)))

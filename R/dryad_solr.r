@@ -2,8 +2,19 @@
 #'
 #' @export
 #'
-#' @param ... Parameters to pass to any of the \code{solr_*} functions in the \code{\link{solr}}
-#' package.
+#' @param ... Solr parameters passed on to the respective \pkg{solrium} package
+#' function.
+#' @param proxy List of arguments for a proxy connection, including one or
+#' more of: url, port, username, password, and auth. See
+#' \code{\link[httr]{use_proxy}} for help, which is used to construct the
+#' proxy connection.
+#' @param callopts Further args passed on to \code{\link[httr]{GET}}
+#'
+#' @details See the \code{solrium} package documentation for available
+#' parameters. For each of \code{d_solr_search}, \code{d_solr_facet},
+#' \code{d_solr_stats}, and \code{d_solr_mlt}, \code{d_solr_group}, and
+#' \code{d_solr_highlight} see the equivalently named function in \pkg{solrium}.
+#'
 #' @examples \dontrun{
 #' # Basic search
 #' d_solr_search(q="Galliard")
@@ -39,38 +50,63 @@
 #' # Stats
 #' d_solr_stats(q="*:*", stats.field="dc.date.accessioned.year")
 #' }
-d_solr_search <- function(...){
-  solr_search(..., base = dsolrbase())
+d_solr_search <- function(..., proxy = NULL, callopts = list()) {
+  if (!is.null(proxy)) conn_dc <- make_dryad_conn(proxy)
+  args <- list(...)
+  if (!is.null(args$fl)) args$fl <- paste(args$fl, collapse = ",")
+  conn_dryad$search(params = args, minOptimizedRows = FALSE,
+    callopts = callopts)
 }
 
 #' @export
 #' @rdname d_solr_search
-d_solr_facet <- function(...){
-  solr_facet(..., base = dsolrbase())
+d_solr_facet <- function(..., proxy = NULL, callopts = list()) {
+  if (!is.null(proxy)) conn_dc <- make_dryad_conn(proxy)
+  args <- list(...)
+  if (!is.null(args$fl)) args$fl <- paste(args$fl, collapse = ",")
+  conn_dryad$facet(params = args, callopts = callopts)
 }
 
 #' @export
 #' @rdname d_solr_search
-d_solr_group <- function(...){
-  solr_group(..., base = dsolrbase())
+d_solr_group <- function(..., proxy = NULL, callopts = list()) {
+  if (!is.null(proxy)) conn_dc <- make_dryad_conn(proxy)
+  args <- list(...)
+  if (!is.null(args$fl)) args$fl <- paste(args$fl, collapse = ",")
+  conn_dryad$group(params = args, callopts = callopts)
 }
 
 #' @export
 #' @rdname d_solr_search
-d_solr_highlight <- function(...){
-  solr_highlight(..., base = dsolrbase())
+d_solr_highlight <- function(..., proxy = NULL, callopts = list()) {
+  if (!is.null(proxy)) conn_dc <- make_dryad_conn(proxy)
+  args <- list(...)
+  if (!is.null(args$fl)) args$fl <- paste(args$fl, collapse = ",")
+  conn_dryad$highlight(params = args, callopts = callopts, parsetype = "list")
 }
 
 #' @export
 #' @rdname d_solr_search
-d_solr_mlt <- function(...){
-  solr_mlt(..., base = dsolrbase())
+d_solr_mlt <- function(..., proxy = NULL, callopts = list()) {
+  if (!is.null(proxy)) conn_dc <- make_dryad_conn(proxy)
+  args <- list(...)
+  if (!is.null(args$fl)) args$fl <- paste(args$fl, collapse = ",")
+  conn_dryad$mlt(params = args, minOptimizedRows = FALSE,
+    callopts = callopts)
 }
 
 #' @export
 #' @rdname d_solr_search
-d_solr_stats <- function(...){
-  solr_stats(..., base = dsolrbase())
+d_solr_stats <- function(..., proxy = NULL, callopts = list()) {
+  if (!is.null(proxy)) conn_dc <- make_dryad_conn(proxy)
+  args <- list(...)
+  if (!is.null(args$fl)) args$fl <- paste(args$fl, collapse = ",")
+  conn_dryad$stats(params = args, callopts = callopts)
 }
 
-dsolrbase <- function() "http://datadryad.org/solr/search/select"
+# helpers ---------------------------------------
+make_dryad_conn <- function(proxy) {
+  solrium::SolrClient$new(host = "datadryad.org",
+    path = "solr/search/select", scheme = "http",
+    port = NULL, errors = "complete")
+}

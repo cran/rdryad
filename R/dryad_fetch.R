@@ -1,24 +1,35 @@
 #' Download Dryad files
 #'
 #' @export
-#' @param url Dryad URL for a dataset.
-#' @param destfile Destination file. If not given, we assign a file name based
-#' on URL provided.
-#' @param ... Further args passed on to \code{\link{download.file}}
-#' @return A path to the file
-#' @details This function is a thin wrapper around download.file to get files
-#' to your machine only. We don't attempt to read/parse them in to R.
+#' @param url (character) One or more Dryad URL for a dataset.
+#' @param destfile (character) Destination file. If not given, we assign a
+#' file name based on URL provided.
+#' @param ... Further args passed on to [curl::curl_download()]
+#' @return (character) path(s) to the file(s)
+#' @details This function is a thin wrapper around [curl::curl_download()] to
+#' get files to your machine only. We don't attempt to read/parse them
 #' @examples \dontrun{
-#' url <- download_url('10255/dryad.1759')
-#' dryad_fetch(url)
+#' # Single file
+#' x <- dryad_files('10.5061/dryad.1758')
+#'
+#' ## without specifying a destination file
+#' dryad_fetch(url = x)
+#'
+#' ## specify a destination file
+#' dryad_fetch(url = x, (f <- tempfile(fileext = ".csv")))
+#'
+#' # Many files
+#' x <- dryad_files(doi = '10.5061/dryad.60699')
+#' res <- dryad_fetch(x)
+#' head(read.delim(res[[1]], sep = ";"))
 #' }
 dryad_fetch <- function(url, destfile = NULL, ...) {
+	assert(url, "character")
   if (is.null(destfile)) {
-    num <- sub("/", "_", strextract(url, "10255/dryad\\.[0-9]+/[A-Za-z\\.]+"))
-    destfile <- file.path(Sys.getenv("HOME"), num)
-    if (!file.exists(destfile)) {
-      dir.create(dirname(destfile), recursive = TRUE)
-    }
+  	destfile <- replicate(length(url), tempfile())
   }
-  download.file(url, destfile = destfile, ...)
+  stopifnot(length(url) == length(destfile))
+  Map(function(a, b) {
+  	curl::curl_download(a, destfile = b, ...)
+  }, url, destfile)
 }

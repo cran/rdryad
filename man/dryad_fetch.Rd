@@ -7,27 +7,37 @@
 dryad_fetch(url, destfile = NULL, ...)
 }
 \arguments{
-\item{url}{Dryad URL for a dataset.}
+\item{url}{(character) One or more Dryad URL for a dataset.}
 
-\item{destfile}{Destination file. If not given, we assign a file name based
-on URL provided.}
+\item{destfile}{(character) Destination file. If not given, we assign a
+file name based on URL provided.}
 
-\item{...}{Further args passed on to \code{\link{download.file}}}
+\item{...}{Further args passed on to \code{\link[curl:curl_download]{curl::curl_download()}}}
 }
 \value{
-A path to the file
+(character) path(s) to the file(s)
 }
 \description{
 Download Dryad files
 }
 \details{
-This function is a thin wrapper around download.file to get files
-to your machine only. We don't attempt to read/parse them in to R.
+This function is a thin wrapper around \code{\link[curl:curl_download]{curl::curl_download()}} to
+get files to your machine only. We don't attempt to read/parse them
 }
 \examples{
 \dontrun{
-url <- download_url('10255/dryad.1759')
-dryad_fetch(url)
-}
-}
+# Single file
+x <- dryad_files('10.5061/dryad.1758')
 
+## without specifying a destination file
+dryad_fetch(url = x)
+
+## specify a destination file
+dryad_fetch(url = x, (f <- tempfile(fileext = ".csv")))
+
+# Many files
+x <- dryad_files(doi = '10.5061/dryad.60699')
+res <- dryad_fetch(x)
+head(read.delim(res[[1]], sep = ";"))
+}
+}

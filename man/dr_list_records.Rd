@@ -31,7 +31,7 @@ loop for you internally to get all the records you asked for.}
 \item{as}{(character) What to return. One of "df" (for data.frame; default),
 "list", or "raw" (raw text)}
 
-\item{...}{Curl debugging options passed on to \code{\link[httr]{GET}}}
+\item{...}{Curl debugging options passed on to \code{httr::GET}}
 }
 \value{
 XML character string, data.frame, or list, depending on what requested
@@ -45,4 +45,3 @@ List Dryad records
 dr_list_records(from='2010-01-01', until='2010-09-10')
 }
 }
-

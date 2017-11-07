@@ -2,25 +2,33 @@
 % Please edit documentation in R/download_url.r
 \name{download_url}
 \alias{download_url}
+\alias{dryad_files}
 \title{Get a URL given a Dryad ID}
 \usage{
-download_url(id, ...)
+download_url(doi, ...)
+
+dryad_files(doi, ...)
 }
 \arguments{
-\item{id}{Dryad identifier, i.e. '10255/dryad.19'.}
+\item{doi}{(character) A Dryad dataset DOI, of the form
+10.5061/dryad.xxx. required}
 
-\item{...}{Curl options, passed on to \code{\link[httr]{GET}}}
+\item{...}{Curl options, passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
 \value{
-A URL for dataset for the Dryad id.
+(character) One or more URLS for direct download of datasets
+for the given Dryad DOI
 }
 \description{
 Get a URL given a Dryad ID
 }
+\details{
+This function name changing to \code{dryad_files} in the next version;
+both work for now
+}
 \examples{
 \dontrun{
-download_url(id = '10255/dryad.1759')
-download_url(id = '10255/dryad.102551')
+dryad_files(doi = '10.5061/dryad.1758')
+dryad_files(doi = '10.5061/dryad.60699')
 }
 }
-
