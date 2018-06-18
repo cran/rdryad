@@ -22,24 +22,29 @@ d_solr_mlt(..., proxy = NULL, callopts = list())
 d_solr_stats(..., proxy = NULL, callopts = list())
 }
 \arguments{
-\item{...}{Solr parameters passed on to the respective \pkg{solrium} package
-function.}
+\item{...}{Solr parameters passed on to the respective \pkg{solrium}
+package function.}
 
 \item{proxy}{List of arguments for a proxy connection, including one or
-more of: url, port, username, password, and auth. See
-\code{\link[httr]{use_proxy}} for help, which is used to construct the
-proxy connection.}
+more of: \code{url}, \code{user}, \code{pwd}, and \code{auth}. See \link[crul:proxy]{crul::proxy} for help,
+which is used to construct the proxy connection.}
 
-\item{callopts}{Further args passed on to \code{\link[httr]{GET}}}
+\item{callopts}{Further args passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
 \description{
 Search the Dryad Solr endpoint.
 }
 \details{
-See the \code{solrium} package documentation for available
+See the \pkg{solrium} package documentation for available
 parameters. For each of \code{d_solr_search}, \code{d_solr_facet},
 \code{d_solr_stats}, and \code{d_solr_mlt}, \code{d_solr_group}, and
-\code{d_solr_highlight} see the equivalently named function in \pkg{solrium}.
+\code{d_solr_highlight} see the equivalently named function in
+\pkg{solrium}.
+
+The \code{wt} parameter is now hard-coded to \code{xml} because a recent
+change in the Dryad Solr infrastructure makes it impossible to get
+JSON output - this shouldn't affect most users. In addition, we
+hard code a curl option to follow redirects, just so you're aware.
 }
 \examples{
 \dontrun{
@@ -47,7 +52,7 @@ parameters. For each of \code{d_solr_search}, \code{d_solr_facet},
 d_solr_search(q="Galliard")
 
 # Basic search, restricting to certain fields
-d_solr_search(q="Galliard", fl='handle,dc.title_sort')
+d_solr_search(q="Galliard", fl=c('handle', 'dc.title_sort'))
 
 # Search all text for a string, but limits results to two specified fields:
 d_solr_search(q="dwc.ScientificName:drosophila", fl='handle,dc.title_sort')
@@ -64,7 +69,7 @@ d_solr_facet(q="location:l2", facet.field="dc.subject_filter", facet.minCount=1,
 d_solr_search(q="dc.date.available_dt:[NOW-90DAY/DAY TO NOW]",
    fl="dc.relation.isreferencedby", rows=10)
 
-# Data DOIs published in Dryad during January 2011, with results returned in JSON format:
+# Data DOIs published in Dryad during January 2011
 query <- "location:l2 dc.date.available_dt:[2011-01-01T00:00:00Z TO 2011-01-31T23:59:59Z]"
 d_solr_search(q=query, fl="dc.identifier", rows=10)
 

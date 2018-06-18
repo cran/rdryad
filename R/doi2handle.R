@@ -2,13 +2,12 @@
 #'
 #' @export
 #' @param x (character) A Dryad dataset DOI or handle. required
-#' @param ...	Curl options, passed on to [crul::HttpClient]
+#' @param ... Curl options, passed on to [crul::HttpClient]
 #' @return (character) a DOI or handle
 #'
 #' @examples \dontrun{
 #' doi2handle('10.5061/dryad.c0765')
 #' handle2doi('10255/dryad.153920')
-#'
 #' doi2handle('10.5061/dryad.c0765')
 #' }
 doi2handle <- function(x, ...) {

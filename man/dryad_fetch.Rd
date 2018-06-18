@@ -4,18 +4,22 @@
 \alias{dryad_fetch}
 \title{Download Dryad files}
 \usage{
-dryad_fetch(url, destfile = NULL, ...)
+dryad_fetch(url, destfile = NULL, try_file_names = FALSE, ...)
 }
 \arguments{
-\item{url}{(character) One or more Dryad URL for a dataset.}
+\item{url}{(character) One or more Dryad URL for a dataset}
 
 \item{destfile}{(character) Destination file. If not given, we assign a
 file name based on URL provided.}
 
+\item{try_file_names}{(logical) try to parse file names out of the
+URLs. Default: \code{FALSE}}
+
 \item{...}{Further args passed on to \code{\link[curl:curl_download]{curl::curl_download()}}}
 }
 \value{
-(character) path(s) to the file(s)
+named (list) with path(s) to the file(s) - list names
+are the urls passed into the \code{url} parameter
 }
 \description{
 Download Dryad files
@@ -33,7 +37,10 @@ x <- dryad_files('10.5061/dryad.1758')
 dryad_fetch(url = x)
 
 ## specify a destination file
-dryad_fetch(url = x, (f <- tempfile(fileext = ".csv")))
+dryad_fetch(url = x[1], (f <- tempfile(fileext = ".csv")))
+
+## use try_file_names - we try to extract file names from URLs
+dryad_fetch(url = x, try_file_names = TRUE)
 
 # Many files
 x <- dryad_files(doi = '10.5061/dryad.60699')
