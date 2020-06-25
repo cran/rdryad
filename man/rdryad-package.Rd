@@ -12,42 +12,48 @@ their REST API.
 \section{Package API}{
 
 
-The following functions work with the Dryad Solr service
+The functions match the three major sets of Dryad API routes for
+datasets, fiiles and versions.
+
+Datasets:
 \itemize{
-\item \code{\link[=d_solr_facet]{d_solr_facet()}}
-\item \code{\link[=d_solr_group]{d_solr_group()}}
-\item \code{\link[=d_solr_highlight]{d_solr_highlight()}}
-\item \code{\link[=d_solr_mlt]{d_solr_mlt()}}
-\item \code{\link[=d_solr_search]{d_solr_search()}}
-\item \code{\link[=d_solr_stats]{d_solr_stats()}}
+\item \code{\link[=dryad_dataset]{dryad_dataset()}}
+\item \code{\link[=dryad_datasets]{dryad_datasets()}}
+\item \code{\link[=dryad_dataset_versions]{dryad_dataset_versions()}}
 }
 
-The following functions work with the Dryad OAI-PMH service
+Files:
 \itemize{
-\item \code{\link[=dr_get_records]{dr_get_records()}}
-\item \code{\link[=dr_identify]{dr_identify()}}
-\item \code{\link[=dr_list_identifiers]{dr_list_identifiers()}}
-\item \code{\link[=dr_list_metadata_formats]{dr_list_metadata_formats()}}
-\item \code{\link[=dr_list_records]{dr_list_records()}}
-\item \code{\link[=dr_list_sets]{dr_list_sets()}}
-}
-
-The following functions sort out file URLs and help you download
-those files
-\itemize{
-\item \code{\link[=dryad_fetch]{dryad_fetch()}}
 \item \code{\link[=dryad_files]{dryad_files()}}
+\item \code{\link[=dryad_files_download]{dryad_files_download()}}
+}
+
+Versions:
+\itemize{
+\item \code{\link[=dryad_versions]{dryad_versions()}}
+\item \code{\link[=dryad_versions_files]{dryad_versions_files()}}
+\item \code{\link[=dryad_versions_download]{dryad_versions_download()}}
+}
+}
+
+\section{Defunct}{
+
+
+The Dryad Solr API is no longer being updated, so the functions
+that used to work with it are all defunct, see \link{solr-defunct}
+
+The Dryad OAI-PMH service is no longer being updated, so the functions
+that used to work with it are all defunct, see \link{oai-defunct}
+
+More defunct functions:
+\itemize{
 \item \code{\link[=dryad_metadata]{dryad_metadata()}}
 \item \code{\link[=dryad_package_dois]{dryad_package_dois()}}
-}
-
-These functions convert between Dryad handles and DOIs
-\itemize{
 \item \code{\link[=handle2doi]{handle2doi()}}
 \item \code{\link[=doi2handle]{doi2handle()}}
+\item \code{\link[=dryad_files]{dryad_files()}}
+\item \code{\link[=dryad_fetch]{dryad_fetch()}} - use instead \code{\link[=dryad_files_download]{dryad_files_download()}} or
+\code{\link[=dryad_versions_download]{dryad_versions_download()}}
 }
 }
 
-\author{
-Scott Chamberlain \email{myrmecocystus@gmail.com}
-}

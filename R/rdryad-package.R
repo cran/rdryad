@@ -4,44 +4,53 @@
 #' their REST API.
 #'
 #' @section Package API:
+#' 
+#' The functions match the three major sets of Dryad API routes for
+#' datasets, fiiles and versions.
 #'
-#' The following functions work with the Dryad Solr service
-#' - [d_solr_facet()]
-#' - [d_solr_group()]
-#' - [d_solr_highlight()]
-#' - [d_solr_mlt()]
-#' - [d_solr_search()]
-#' - [d_solr_stats()]
+#' Datasets:
 #'
-#' The following functions work with the Dryad OAI-PMH service
+#' - [dryad_dataset()]
+#' - [dryad_datasets()]
+#' - [dryad_dataset_versions()]
+#' 
+#' Files:
 #'
-#' - [dr_get_records()]
-#' - [dr_identify()]
-#' - [dr_list_identifiers()]
-#' - [dr_list_metadata_formats()]
-#' - [dr_list_records()]
-#' - [dr_list_sets()]
-#'
-#' The following functions sort out file URLs and help you download
-#' those files
-#'
-#' - [dryad_fetch()]
 #' - [dryad_files()]
+#' - [dryad_files_download()]
+#' 
+#' Versions:
+#'
+#' - [dryad_versions()]
+#' - [dryad_versions_files()]
+#' - [dryad_versions_download()]
+#' 
+#' @section Defunct:
+#' 
+#' The Dryad Solr API is no longer being updated, so the functions
+#' that used to work with it are all defunct, see [solr-defunct]
+#'
+#' The Dryad OAI-PMH service is no longer being updated, so the functions
+#' that used to work with it are all defunct, see [oai-defunct]
+#' 
+#' More defunct functions:
+#' 
 #' - [dryad_metadata()]
 #' - [dryad_package_dois()]
-#' 
-#' These functions convert between Dryad handles and DOIs
-#' 
 #' - [handle2doi()]
 #' - [doi2handle()]
+#' - [dryad_files()]
+#' - [dryad_fetch()] - use instead [dryad_files_download()] or
+#' [dryad_versions_download()]
 #'
-#' @importFrom solrium SolrClient
 #' @importFrom crul HttpClient
-#' @importFrom xml2 read_xml xml_find_all xml_ns xml_attr
-#' @importFrom oai id list_identifiers list_records list_metadataformats
-#' list_sets get_records
+#' @importFrom curl curl_escape
+#' @importFrom jsonlite fromJSON
+#' @importFrom tibble as_tibble
+#' @importFrom mime mimemap
+#' @importFrom hoardr hoard
+#' @importFrom zip unzip
 #' @name rdryad-package
 #' @aliases rdryad
 #' @docType package
-#' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
 NULL
